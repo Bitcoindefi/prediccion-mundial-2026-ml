@@ -1,0 +1,24 @@
+# --- Núcleo ---
+numpy>=1.24
+pandas>=2.0
+scikit-learn>=1.3
+joblib>=1.3
+pyyaml>=6.0
+
+# --- Visualización ---
+matplotlib>=3.7
+seaborn>=0.12
+
+# --- Scraping (fuentes externas) ---
+requests>=2.31
+beautifulsoup4>=4.12
+lxml>=4.9
+
+# --- Interfaz ---
+streamlit>=1.30
+
+# --- Modelo opcional (si falla la instalación, el pipeline lo omite) ---
+xgboost>=2.0
+
+# --- Testing ---
+pytest>=7.4

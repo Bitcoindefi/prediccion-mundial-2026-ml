@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Predicción del Mundial 2026 con Machine Learning</title>
+<style>
+  :root { --azul:#1a3c5e; --azul2:#2a6f97; --bg:#f4f8fb; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:'Segoe UI',system-ui,sans-serif; color:#1c2733; background:var(--bg); line-height:1.6; }
+  header { background:linear-gradient(135deg,var(--azul),var(--azul2)); color:#fff; padding:48px 20px; text-align:center; }
+  header h1 { margin:0 0 8px; font-size:2rem; }
+  header p { margin:0 auto; max-width:680px; opacity:.95; }
+  .badges { margin-top:18px; }
+  .badges a { display:inline-block; background:rgba(255,255,255,.15); color:#fff; text-decoration:none;
+    padding:8px 16px; border-radius:20px; margin:4px; font-size:.9rem; border:1px solid rgba(255,255,255,.3); }
+  .badges a:hover { background:rgba(255,255,255,.28); }
+  main { max-width:980px; margin:0 auto; padding:32px 20px; }
+  section { background:#fff; border-radius:12px; padding:24px; margin-bottom:24px; box-shadow:0 2px 12px rgba(26,60,94,.08); }
+  h2 { color:var(--azul); border-bottom:2px solid var(--bg); padding-bottom:8px; }
+  img { max-width:100%; border-radius:8px; border:1px solid #e2e9f0; margin-top:10px; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:18px; }
+  .card { background:var(--bg); border-radius:10px; padding:16px; }
+  .card h3 { margin:0 0 6px; color:var(--azul2); font-size:1rem; }
+  ul { padding-left:20px; }
+  footer { text-align:center; padding:24px; color:#5b6b7b; font-size:.85rem; }
+  @media(max-width:680px){ .grid{grid-template-columns:1fr;} }
+</style>
+</head>
+<body>
+<header>
+  <h1>⚽ Predicción del Mundial 2026 con Machine Learning</h1>
+  <p>Clasificación supervisada 1X2 que entrena con partidos internacionales reales y pronostica
+     los partidos del Mundial 2026 que faltan, priorizando el <strong>rendimiento reciente</strong>.</p>
+  <div class="badges">
+    <a href="notebooks/Mundial_ML_Colab.ipynb">📓 Notebook (Colab)</a>
+    <a href="README.md">📄 Documentación</a>
+    <a href="#resultados">📊 Resultados</a>
+  </div>
+</header>
+
+<main>
+  <section id="objetivo">
+    <h2>🎯 Objetivo</h2>
+    <p>Predecir el resultado de cada partido (<strong>Victoria Local / Empate / Victoria Visitante</strong>)
+       a partir del desempeño reciente de las selecciones, y aplicar el modelo para pronosticar los
+       encuentros restantes del Mundial 2026, indicando además la probabilidad de que cada equipo
+       <strong>avance</strong> (los penales reparten el empate).</p>
+  </section>
+
+  <section id="resultados">
+    <h2>🏆 Pronóstico — partidos que faltan</h2>
+    <img src="assets/01_pronostico.png" alt="Pronóstico del Mundial 2026">
+  </section>
+
+  <section>
+    <h2>✅ Backtest (out-of-sample)</h2>
+    <p>El modelo se evalúa sobre los partidos del Mundial <strong>ya jugados</strong>, que no vio al entrenar:
+       <strong>~60 % de acierto</strong> 1X2, frente al ~45 % de la línea base.</p>
+    <img src="assets/02_backtest.png" alt="Backtest">
+  </section>
+
+  <section>
+    <h2>🔍 Qué mira el modelo</h2>
+    <p>Domina la <strong>forma reciente</strong> (últimos partidos, forma ponderada, momentum), no la historia antigua.</p>
+    <div class="grid">
+      <div><img src="assets/03_feature_importance.png" alt="Importancia de variables"></div>
+      <div><img src="assets/04_calibracion.png" alt="Calibración"></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🧠 Modelos utilizados</h2>
+    <div class="grid">
+      <div class="card"><h3>Deterministas / estadísticos</h3>
+        <ul><li>Elo (momentum reciente)</li><li>Dixon-Coles (Poisson + decaimiento temporal)</li></ul></div>
+      <div class="card"><h3>ML supervisado (1X2)</h3>
+        <ul><li>Regresión Logística</li><li>Árbol de Decisión</li><li>Random Forest</li><li>XGBoost</li></ul></div>
+      <div class="card"><h3>Métricas</h3>
+        <ul><li>Accuracy, F1-macro</li><li>Log-loss, RPS, Brier</li><li>Calibración</li></ul></div>
+      <div class="card"><h3>Datos</h3>
+        <ul><li>martj42 (partidos reales, CC0)</li><li>API-Football (rating de plantel)</li></ul></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>🚀 Cómo correrlo</h2>
+    <p>Subí <code>notebooks/Mundial_ML_Colab.ipynb</code> a
+       <a href="https://colab.research.google.com">Google Colab</a> y hacé <strong>Runtime → Run all</strong>.</p>
+  </section>
+</main>
+
+<footer>Proyecto académico de Machine Learning · Datos reales · Entrenamiento con énfasis en recencia</footer>
+</body>
+</html>

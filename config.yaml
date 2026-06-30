@@ -1,0 +1,46 @@
+# ============================================================
+# Configuración central del proyecto
+# Predicción de resultados de partidos de selecciones (Mundial)
+# ============================================================
+
+seed: 42
+
+# Tipo de problema: "multiclass" (Victoria/Empate/Derrota) o "binary" (Victoria / No victoria)
+classification: multiclass
+
+data:
+  # Fuente de datos: "synthetic" (genera datos realistas reproducibles)
+  #                  "scrape"    (intenta usar Transfermarkt / Sofascore / FIFA)
+  # Si "scrape" falla en alguna fuente, hace fallback automático a "synthetic".
+  source: synthetic
+
+  synthetic:
+    n_teams: 32
+    start_year: 2010
+    end_year: 2024
+    matches_per_year: 400
+
+  cache_dir: data/cache
+  raw_dir: data/raw
+  processed_dir: data/processed
+
+features:
+  form_window: 5      # nº de partidos para la "forma reciente"
+  h2h_window: 5       # nº de enfrentamientos directos a considerar
+
+elo:
+  base: 1500
+  k: 30
+  home_advantage: 65  # puntos Elo de ventaja de localía
+
+split:
+  test_size: 0.2
+  time_based: true    # IMPORTANTE: split temporal para evitar fuga de información
+
+models:
+  - logistic_regression
+  - decision_tree
+  - random_forest
+  - xgboost            # se omite automáticamente si no está instalado
+
+output_dir: reports

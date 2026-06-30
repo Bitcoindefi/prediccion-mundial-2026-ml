@@ -1,0 +1,17 @@
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Datos y reportes regenerables (se crean al correr el pipeline)
+data/
+reports/
+
+# Sistema
+.DS_Store
+Thumbs.db
